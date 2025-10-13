@@ -1,20 +1,17 @@
 override TARGET = spin
 
-override RM = rm
-override GO = go
+override RM = rm -f
+override MAKEFLAGS = --no-print-directory
+override GO = $$HOME/local/go/go/bin/go
 
 .PHONY: all
-all: $(TARGET)
-
-$(TARGET):
+all:
+	@$(MAKE) clean > /dev/null || true
 	$(GO) build -o $(TARGET) main.go
 
 .PHONY: run
 run: $(TARGET)
 	./$(TARGET)
-
-.PHONY: re
-re: clean all
 
 .PHONY: test
 test:
@@ -23,3 +20,7 @@ test:
 .PHONY: clean
 clean:
 	$(RM) $(TARGET)
+
+.PHONY: fmt
+fmt:
+	$(GO) fmt ./...
