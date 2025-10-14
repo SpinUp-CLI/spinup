@@ -2,9 +2,13 @@ package config
 
 import (
 	"errors"
+	"log"
 	"os"
 	"path/filepath"
+	"regexp"
+	"strings"
 
+	"github.com/joho/godotenv"
 	"gopkg.in/yaml.v3"
 )
 
@@ -77,7 +81,7 @@ the values.
 Does not handle error logging.
 */
 func ParseConfig() (Config, error) {
-	var config = Config{}
+	var config Config
 
 	// Get the path of defaults.yaml
 	configPath, err := getConfigPath()
@@ -91,11 +95,70 @@ func ParseConfig() (Config, error) {
 		return config, err
 	}
 
+	processedYaml, err := processYamlEnv(yamlContent, filepath.Dir(configPath))
+	if err != nil {
+		return config, err
+	}
+
 	// Get the configuration structure from the file content
-	err = yaml.Unmarshal(yamlContent, &config)
+	err = yaml.Unmarshal(processedYaml, &config)
 	if err != nil {
 		return config, err
 	}
 
 	return config, nil
+}
+
+func processYamlEnv(yamlContent []byte, configDir string) ([]byte, error) {
+	envPath, err := extractEnvPath(yamlContent)
+	if err != nil {
+		return nil, err
+	}
+
+	if envPath != "" {
+		absEnvPath := resolveEnvPath(envPath, configDir)
+		if err := godotenv.Load(absEnvPath); err != nil {
+			log.Printf("Environment file cannot be loaded: %s: %s\n", absEnvPath, err)
+		}
+	}
+
+	processed := replaceEnvVars(yamlContent)
+	return processed, nil
+}
+
+func extractEnvPath(yamlContent []byte) (string, error) {
+	var minimal MinimalConfig
+	if err := yaml.Unmarshal(yamlContent, &minimal); err != nil {
+		return "", nil
+	}
+	return minimal.EnvFile, nil
+}
+
+func resolveEnvPath(envPath, configDir string) string {
+	if filepath.IsAbs(envPath) {
+		return envPath
+	}
+	return filepath.Join(configDir, envPath)
+}
+
+func replaceEnvVars(content []byte) []byte {
+	pattern := regexp.MustCompile(`\$\{([^}]+)\}`)
+	result := pattern.ReplaceAllStringFunc(string(content), func (match string) string {
+		inner := match[2 : len(match) - 1]
+
+		parts := strings.SplitN(inner, ":", 2)
+		varName := parts[0]
+
+		defaultValue := ""
+		if len(parts) > 1 {
+			defaultValue = parts[1]
+		}
+		
+		if value := os.Getenv(varName); value != "" {
+			return value
+		}
+		return defaultValue
+	})
+
+	return []byte(result)
 }
