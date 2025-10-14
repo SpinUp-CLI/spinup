@@ -5,6 +5,7 @@ func NewDefaultConfig() *Config {
 		EnvFile: "none",
 		Templates: TemplatesConfig{
 			TemplatePaths: "templates/",
+			TemplateURL: "https://github.com/SpinUp-CLI/",
 			CancelIfError: true,
 			RemoteTemplates: []RemoteTemplate{
 				{
