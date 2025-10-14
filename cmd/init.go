@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"log"
 	"spinup/config"
 
 	"github.com/spf13/cobra"
@@ -13,7 +14,7 @@ var initCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		err := config.CreateDefaultConfig(true)
 		if err != nil {
-			return
+			log.Fatalf("Oops! An error occurred: %s\n", err)
 		}
 	},
 }
