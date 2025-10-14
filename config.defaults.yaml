@@ -1,16 +1,18 @@
-# Environment file for secrets (such as remote tokens).
+# Environment file for secrets (such as remote tokens). Check documentation in the .env.example!
 # string = none | <path>
 env_file: none
 
 # All parameters about the templates.
 templates:
-  # Path for templates. If a template is not found, it will be replaced by the default one if it exists.
+  # Path for templates. If a template is not found, it will use the official remote distribution.
   # string = default | <path>
   template_paths: default
+  # URL for online templates. You are not supposed to change that since you can configure your
+  # remote repositories in the remote_templates param, but you can try.
+  template_url: https://github.com/SpinUp-CLI/
   # If a template is not found, decide if the pipeline has to be cancelled.
   # boolean = true | false
   cancel_if_error: true
-
   # If there is online templates on a git remote, provide it here.
   remote_templates:
     # The name of the remote template, and the URL of the remote.
