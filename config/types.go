@@ -10,4 +10,3 @@ type Config struct {
 type MinimalConfig struct {
 	EnvFile string `yaml:"env_file"`
 }
-

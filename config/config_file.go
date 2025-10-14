@@ -39,7 +39,7 @@ func CreateDefaultConfig(init bool) error {
 
 	if init {
 		// Check if the file exists
-		_, err := os.Stat(configPath);
+		_, err := os.Stat(configPath)
 		if err == nil {
 			return errors.New("Config file already exists. If you want to reset your configuration, run 'spin reset'")
 		}
@@ -54,7 +54,7 @@ func CreateDefaultConfig(init bool) error {
 		}
 	} else {
 		// Check if the file does not exist.
-		_, err := os.Stat(configPath);
+		_, err := os.Stat(configPath)
 		if os.IsNotExist(err) {
 			return errors.New("Config file does not exist. Try doing 'spin init' to create it in your home directory")
 		}
@@ -143,8 +143,8 @@ func resolveEnvPath(envPath, configDir string) string {
 
 func replaceEnvVars(content []byte) []byte {
 	pattern := regexp.MustCompile(`\$\{([^}]+)\}`)
-	result := pattern.ReplaceAllStringFunc(string(content), func (match string) string {
-		inner := match[2 : len(match) - 1]
+	result := pattern.ReplaceAllStringFunc(string(content), func(match string) string {
+		inner := match[2 : len(match)-1]
 
 		parts := strings.SplitN(inner, ":", 2)
 		varName := parts[0]
@@ -153,7 +153,7 @@ func replaceEnvVars(content []byte) []byte {
 		if len(parts) > 1 {
 			defaultValue = parts[1]
 		}
-		
+
 		if value := os.Getenv(varName); value != "" {
 			return value
 		}
