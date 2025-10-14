@@ -1,0 +1,21 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_3_6)">
+<rect width="500" height="500" rx="50" fill="#2A2A2A"/>
+<mask id="mask0_3_6" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-38" y="0" width="576" height="500">
+<path d="M169.331 431.25C46.2835 423.569 -3.6211 96.3562 228.879 86.4577C468.728 76.2462 388.008 446.512 209.233 325.224C145.778 282.154 202.506 171.75 264.17 198.481" stroke="#9C2AFF" stroke-opacity="0.9" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M330.669 68.75C453.717 76.4313 503.621 403.644 271.121 413.542C31.2725 423.754 111.992 53.4875 290.767 174.776C354.223 217.846 297.494 328.25 235.83 301.519" stroke="#9C2AFF" stroke-opacity="0.9" stroke-width="32" stroke-linecap="round" stroke-linejoin="round"/>
+</mask>
+<g mask="url(#mask0_3_6)">
+<rect y="400" width="500" height="100" fill="#6C0BF4"/>
+<rect y="300" width="500" height="100" fill="#A163F8"/>
+<rect y="200" width="500" height="100" fill="#BB8FFA"/>
+<rect y="100" width="500" height="100" fill="#D6BBFC"/>
+<rect width="500" height="100" fill="#F0E7FE"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_3_6">
+<rect width="500" height="500" rx="50" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -2,7 +2,12 @@ override TARGET = spin
 
 override RM = rm -f
 override MAKEFLAGS = --no-print-directory
-override GO = $$HOME/local/go/go/bin/go
+
+ifeq ($(wildcard $$HOME/local/go/go/bin/go),)
+GO = go
+else
+GO = $$HOME/local/go/go/bin/go
+endif
 
 .PHONY: all
 all:
