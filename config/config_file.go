@@ -2,7 +2,7 @@ package config
 
 import (
 	"errors"
-	"log"
+	"fmt"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -25,6 +25,20 @@ func getConfigPath() (string, error) {
 	return configPath, nil
 }
 
+func ConfigFileExists() (bool, error) {
+	configPath, err := getConfigPath()
+
+	_, err = os.Stat(configPath)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsExist(err) {
+		return true, err
+	}
+
+	return false, nil
+}
+
 /*
 (Re)initialize the configuration file. If the init parameter
 is set to true, then the file will be created. Otherwise, it will be overwitten.
@@ -37,14 +51,15 @@ func CreateDefaultConfig(init bool) error {
 		return err
 	}
 
+	// Check if the file exists
+	exists, err := ConfigFileExists()
+	if err != nil {
+		return err
+	}
+
 	if init {
-		// Check if the file exists
-		_, err := os.Stat(configPath)
-		if err == nil {
+		if exists {
 			return errors.New("Config file already exists. If you want to reset your configuration, run 'spin reset'")
-		}
-		if os.IsExist(err) {
-			return err
 		}
 
 		// Create the dir if it does not exist.
@@ -54,8 +69,7 @@ func CreateDefaultConfig(init bool) error {
 		}
 	} else {
 		// Check if the file does not exist.
-		_, err := os.Stat(configPath)
-		if os.IsNotExist(err) {
+		if !exists {
 			return errors.New("Config file does not exist. Try doing 'spin init' to create it in your home directory")
 		}
 	}
@@ -117,8 +131,8 @@ func processYamlEnv(yamlContent []byte, configDir string) ([]byte, error) {
 
 	if envPath != "" {
 		absEnvPath := resolveEnvPath(envPath, configDir)
-		if err := godotenv.Load(absEnvPath); err != nil {
-			log.Printf("Environment file cannot be loaded: %s: %s\n", absEnvPath, err)
+		if err := godotenv.Load(absEnvPath); err != nil && envPath != "none" {
+			fmt.Printf("Cannot load environment file: %s, because: %s\n", absEnvPath, err)
 		}
 	}
 
