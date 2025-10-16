@@ -96,6 +96,7 @@ Does not handle error logging.
 */
 func ParseConfig() (Config, error) {
 	var config Config
+	config = *NewDefaultConfig()
 
 	// Get the path of defaults.yaml
 	configPath, err := getConfigPath()

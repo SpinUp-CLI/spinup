@@ -4,13 +4,13 @@ func NewDefaultConfig() *Config {
 	return &Config{
 		EnvFile: "none",
 		Templates: TemplatesConfig{
-			TemplatePaths: "templates/",
-			TemplateURL:   "https://github.com/SpinUp-CLI/",
+			TemplatesPath: "templates/",
 			CancelIfError: true,
-			RemoteTemplates: []RemoteTemplate{
+			Remotes: []TemplatesRemote{
 				{
 					Name: "none",
 					URL:  "none",
+					Secret: "none",
 				},
 			},
 		},
@@ -25,9 +25,6 @@ func NewDefaultConfig() *Config {
 			Docker:          true,
 			FrontendPort:    3000,
 			BackendPort:     9000,
-		},
-		CLI: CLIConfig{
-			Verbose: true,
 		},
 	}
 }

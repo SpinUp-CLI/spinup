@@ -1,9 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"spinup/config"
+	"spinup/project"
 
 	"github.com/spf13/cobra"
 )
@@ -33,7 +33,10 @@ var newCmd = &cobra.Command{
 			return
 		}
 
-		fmt.Printf("Front-end framework will be: %s\n", config.Defaults.Frontend)
+		if project.CreateProject(config) != nil {
+			log.Fatalf("Oops! An error occurred: %s\n", err)
+			return
+		}
 	},
 }
 
