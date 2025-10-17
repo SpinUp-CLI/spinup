@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"log"
-	"spinup/config"
-	"spinup/project"
+	"spinup/internal/config"
+	"spinup/internal/project"
+	"spinup/pkg/fileutils"
 
 	"github.com/spf13/cobra"
 )
@@ -13,7 +14,13 @@ var newCmd = &cobra.Command{
 	Short: "Soon.",
 	Long:  `Soon.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		exists, err := config.ConfigFileExists()
+		path, err := config.GetConfigPath()
+		if err != nil {
+			log.Fatalf("Oops! An error occurred: %+v\n", err)
+			return
+		}
+
+		exists, err := fileutils.FileExists(path)
 		if err != nil {
 			log.Fatalf("Oops! An error occurred: %+v\n", err)
 			return
@@ -33,7 +40,7 @@ var newCmd = &cobra.Command{
 			return
 		}
 
-		if project.CreateProject(config) != nil {
+		if err = project.CreateProject(config); err != nil {
 			log.Fatalf("Oops! An error occurred: %+v\n", err)
 			return
 		}

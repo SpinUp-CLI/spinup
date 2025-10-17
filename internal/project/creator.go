@@ -5,7 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"spinup/config"
+	"spinup/internal/config"
 
 	"github.com/go-git/go-git/v5"
 )
@@ -30,14 +30,6 @@ func CreateProject(conf config.Config) error {
 		TemplatesPath: conf.Templates.TemplatesPath,
 		Remotes:       conf.Templates.Remotes,
 	}
-	// backend := ServiceStack{
-	// 	Stack:         "back",
-	// 	Name:          conf.Defaults.Backend,
-	// 	Path:          projectPath,
-	// 	ProjectName:   conf.Defaults.ProjectName,
-	// 	TemplatesPath: conf.Templates.TemplatesPath,
-	// 	Remotes:       conf.Templates.Remotes,
-	// }
 
 	err = setupStack(frontend)
 
@@ -81,8 +73,8 @@ func setupStack(stack ServiceStack) error {
 				fmt.Printf("%+v\n", err)
 				return err
 			}
-			fmt.Printf("%s\n", out)
-			run := exec.Command("npm", "run", "dev", "&")
+			fmt.Printf("%s\nWebsite URL: http://localhost:5173/", out)
+			run := exec.Command("npm", "run", "dev")
 			run.Dir = stackDir
 			out, err = run.Output()
 			if err != nil {

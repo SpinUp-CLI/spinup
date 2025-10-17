@@ -1,6 +1,6 @@
 package project
 
-import "spinup/config"
+import "spinup/internal/config"
 
 type ServiceStack struct {
 	Name          string

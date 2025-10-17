@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"log"
-	"spinup/config"
+	"spinup/internal/config"
 
 	"github.com/spf13/cobra"
 )
