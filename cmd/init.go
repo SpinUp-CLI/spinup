@@ -14,7 +14,7 @@ var initCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		err := config.CreateDefaultConfig(true)
 		if err != nil {
-			log.Fatalf("Oops! An error occurred: %s\n", err)
+			log.Fatalf("Oops! An error occurred: %v\n", err)
 		}
 	},
 }

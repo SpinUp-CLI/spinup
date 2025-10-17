@@ -4,12 +4,12 @@ func NewDefaultConfig() *Config {
 	return &Config{
 		EnvFile: "none",
 		Templates: TemplatesConfig{
-			TemplatesPath: "templates/",
+			TemplatesPath: "none",
 			CancelIfError: true,
 			Remotes: []TemplatesRemote{
 				{
-					Name: "none",
-					URL:  "none",
+					Name:   "none",
+					URL:    "none",
 					Secret: "none",
 				},
 			},

@@ -11,14 +11,14 @@ type MinimalConfig struct {
 }
 
 type TemplatesConfig struct {
-	TemplatesPath   string           `yaml:"templates_path"`
-	CancelIfError   bool             `yaml:"cancel_if_error"`
-	Remotes []TemplatesRemote `yaml:"remote_templates"`
+	TemplatesPath string            `yaml:"templates_path"`
+	CancelIfError bool              `yaml:"cancel_if_error"`
+	Remotes       []TemplatesRemote `yaml:"remote_templates"`
 }
 
 type TemplatesRemote struct {
-	Name string `yaml:"name"`
-	URL  string `yaml:"url"`
+	Name   string `yaml:"name"`
+	URL    string `yaml:"url"`
 	Secret string `yaml:"secret"`
 }
 

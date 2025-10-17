@@ -15,26 +15,26 @@ var newCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		exists, err := config.ConfigFileExists()
 		if err != nil {
-			log.Fatalf("Oops! An error occurred: %s\n", err)
+			log.Fatalf("Oops! An error occurred: %+v\n", err)
 			return
 		}
 
 		if !exists {
 			err = config.CreateDefaultConfig(true)
 			if err != nil {
-				log.Fatalf("Oops! An error occurred: %s\n", err)
+				log.Fatalf("Oops! An error occurred: %+v\n", err)
 				return
 			}
 		}
 
 		config, err := config.ParseConfig()
 		if err != nil {
-			log.Fatalf("Oops! An error occurred: %s\n", err)
+			log.Fatalf("Oops! An error occurred: %+v\n", err)
 			return
 		}
 
 		if project.CreateProject(config) != nil {
-			log.Fatalf("Oops! An error occurred: %s\n", err)
+			log.Fatalf("Oops! An error occurred: %+v\n", err)
 			return
 		}
 	},
