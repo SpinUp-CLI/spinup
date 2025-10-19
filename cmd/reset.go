@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"log"
-	"spinup/internal/config"
+	"spinup/internal/commands"
 
 	"github.com/spf13/cobra"
 )
@@ -11,12 +10,7 @@ var resetCmd = &cobra.Command{
 	Use:   "reset",
 	Short: "Soon.",
 	Long:  `Soon.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		err := config.CreateDefaultConfig(false)
-		if err != nil {
-			log.Fatalf("Oops! An error occurred: %v\n", err)
-		}
-	},
+	Run:   commands.ResetCmd,
 }
 
 func init() {

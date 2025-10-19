@@ -1,4 +1,4 @@
-package project
+package service_stack
 
 import (
 	"fmt"
@@ -9,6 +9,15 @@ import (
 
 	"github.com/go-git/go-git/v5"
 )
+
+type ServiceStack struct {
+	Name          string
+	Stack         string
+	ProjectName   string
+	TemplatesPath string
+	Path          string
+	Remotes       []config.TemplatesRemote
+}
 
 func CreateProject(conf config.Config) error {
 	cwd, err := os.Getwd()
