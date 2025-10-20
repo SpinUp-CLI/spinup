@@ -1,4 +1,4 @@
-package service_stack
+package project
 
 import (
 	"fmt"
@@ -20,16 +20,7 @@ type ServiceStack struct {
 }
 
 func CreateProject(conf config.Config) error {
-	cwd, err := os.Getwd()
-	if err != nil {
-		return err
-	}
-
 	projectPath := filepath.Join(cwd, conf.Defaults.ProjectName)
-	err = os.Mkdir(projectPath, 0755)
-	if err != nil {
-		return err
-	}
 
 	frontend := ServiceStack{
 		Stack:         "front",
@@ -65,7 +56,7 @@ func setupStack(stack ServiceStack) error {
 	if !cloned {
 		if stack.TemplatesPath != "none" {
 			// cloned true
-			// moved the folder
+			// moved the directory
 		} else {
 			templateUrl := fmt.Sprintf("https://github.com/SpinUp-CLI/%s-template", stack.Name)
 			_, err := git.PlainClone(stackDir, false, &git.CloneOptions{

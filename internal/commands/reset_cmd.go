@@ -11,14 +11,14 @@ import (
 func ResetCmd(cmd *cobra.Command, args []string) {
 	configExists := cmdutils.ConfigExists()
 	if !configExists {
-		iostream.Warning(
+		iostream.Error(
 			iostream.OutString{},
-			iostream.OutString{String: "Oops! It is impossible"},
+			iostream.OutString{String: "Configuration file not found"},
 			errors.New("it seems you don't have a configuration yet"),
 		)
 		return
 	}
 
 	configPath := cmdutils.WriteConfig()
-	iostream.Success("Your configuration is now reset to defaults! Just right there: %s", configPath)
+	iostream.Success("Configuration reset to defaults. Configuration file path: %s", configPath)
 }

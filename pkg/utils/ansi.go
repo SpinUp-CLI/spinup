@@ -8,4 +8,4 @@ var Green = "\033[38;2;132;255;94m"
 var ClearLn = "\033[2K\r"
 
 var Arrow = "▶"
-var Star = "⟡"
+var Star = "★"

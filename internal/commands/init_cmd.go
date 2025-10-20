@@ -11,14 +11,14 @@ import (
 func InitCmd(cmd *cobra.Command, args []string) {
 	configExists := cmdutils.ConfigExists()
 	if configExists {
-		iostream.Warning(
+		iostream.Error(
 			iostream.OutString{},
-			iostream.OutString{String: "Oops! It is impossible"},
-			errors.New("it seems you already have a configuration"),
+			iostream.OutString{String: "Configuration file found"},
+			errors.New("it seems a configuration already exists"),
 		)
 		return
 	}
 
 	configPath := cmdutils.WriteConfig()
-	iostream.Success("Your configuration is now created! Just right there: %s", configPath)
+	iostream.Success("Configuration file created. Configuration file path: %s", configPath)
 }

@@ -2,7 +2,7 @@ package iostream
 
 import (
 	"fmt"
-	"log"
+	"os"
 	"spinup/pkg/utils"
 )
 
@@ -38,7 +38,10 @@ func print(successOutStr, errorOutStr OutString, err error, logLevel int, exit b
 	var method func(string, ...any)
 
 	if exit {
-		method = func(format string, args ...any) { log.Fatalf(format, args...) }
+		method = func(format string, args ...any) {
+			fmt.Printf(format, args...)
+			os.Exit(1)
+		}
 	} else {
 		method = func(format string, args ...any) { fmt.Printf(format, args...) }
 	}
@@ -55,12 +58,21 @@ func print(successOutStr, errorOutStr OutString, err error, logLevel int, exit b
 			print(successOutStr, errorOutStr, nil, LogInfo, false)
 			return
 		}
-		method("%s❌  %s %s: %+v%s\n", utils.Red, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
+		method("%s❌ %s %s: %+v%s\n", utils.Red, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
 	case LogInfo:
+		if len(successOutStr.String) == 0 {
+			return
+		}
 		method("%s%s %s%s\n", utils.Blue, utils.Arrow, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
 	case LogSuccess:
+		if len(successOutStr.String) == 0 {
+			return
+		}
 		method("%s%s %s%s\n", utils.Green, utils.Star, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
 	default:
+		if len(successOutStr.String) == 0 {
+			return
+		}
 		method("%s%s %s%s\n", utils.Blue, utils.Arrow, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
 	}
 }

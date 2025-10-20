@@ -9,15 +9,15 @@ import (
 func ConfigExists() bool {
 	configPath, err := config.GetConfigPath()
 	iostream.Error(
-		iostream.OutString{String: "Fetching your configuration file"},
-		iostream.OutString{String: "Ho... Something went wrong with configuration file path"},
+		iostream.OutString{String: "Fetched the configuration file path"},
+		iostream.OutString{String: "Something went wrong with configuration file path"},
 		err,
 	)
 
 	configExists, err := fileutils.FileExists(configPath)
 	iostream.Error(
-		iostream.OutString{String: "Checking if it exists"},
-		iostream.OutString{String: "Ho... Something went wrong with configuration file"},
+		iostream.OutString{String: "Checked if it exists"},
+		iostream.OutString{String: "Something went wrong with configuration file"},
 		err,
 	)
 

@@ -11,6 +11,7 @@ var initCmd = &cobra.Command{
 	Short: "Soon.",
 	Long:  `Soon.`,
 	Run:   commands.InitCmd,
+	Args: cobra.MaximumNArgs(0),
 }
 
 func init() {
