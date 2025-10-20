@@ -11,7 +11,7 @@ var resetCmd = &cobra.Command{
 	Short: "Soon.",
 	Long:  `Soon.`,
 	Run:   commands.ResetCmd,
-	Args: cobra.MaximumNArgs(0),
+	Args:  cobra.MaximumNArgs(0),
 }
 
 func init() {

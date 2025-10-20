@@ -16,7 +16,7 @@ type ServiceStack struct {
 	Name      string
 	Path      string
 	Framework string
-	URI       string
+	URL       string
 	Required  bool
 }
 
@@ -31,14 +31,14 @@ func NewDefaultProject(cfg config.Config, path string) *Project {
 			Name:      frontName,
 			Path:      filepath.Join(path, frontName),
 			Framework: cfg.Defaults.Frontend,
-			URI:       "undefined",
+			URL:       "undefined",
 			Required:  cfg.Defaults.Frontend != "none",
 		},
 		Backend: ServiceStack{
 			Name:      backName,
 			Path:      filepath.Join(path, backName),
 			Framework: cfg.Defaults.Backend,
-			URI:       "undefined",
+			URL:       "undefined",
 			Required:  cfg.Defaults.Backend != "none",
 		},
 	}

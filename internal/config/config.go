@@ -39,13 +39,13 @@ func NewDefaultConfig() *Config {
 			Remotes: []TemplatesRemote{
 				{
 					Name:   "none",
-					URL:    "none",
+					URL:    "https://github.com/SpinUp-CLI/",
 					Secret: "none",
 				},
 			},
 		},
 		Defaults: DefaultsConfig{
-			Frontend:    "vue",
+			Frontend:    "vue-template",
 			Backend:     "go",
 			Database:    "postgresql",
 			ProjectName: "web-app",

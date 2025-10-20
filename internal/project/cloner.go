@@ -8,19 +8,19 @@ import (
 )
 
 func TryRemote(path, url string, remote config.TemplatesRemote) (*git.Repository, error) {
-	if remote.Secret != "none" && len(remote.Secret) > 0 {
+	if remote.Secret == "none" || len(remote.Secret) == 0 {
 		repo, err := git.PlainClone(path, false, &git.CloneOptions{
 			URL: url,
-			Auth: &http.BasicAuth{
-				Username: remote.Name,
-				Password: remote.Secret,
-			},
 		})
 		return repo, err
 	}
 
 	repo, err := git.PlainClone(path, false, &git.CloneOptions{
 		URL: url,
+		Auth: &http.BasicAuth{
+			Username: remote.Name,
+			Password: remote.Secret,
+		},
 	})
 	return repo, err
 }

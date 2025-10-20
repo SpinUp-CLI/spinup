@@ -1,11 +1,11 @@
 package project
 
 import (
+	"errors"
 	"fmt"
 	"spinup/internal/config"
 	"spinup/pkg/iostream"
 	"sync"
-	"time"
 )
 
 func CreateProject(projectPath string, cfg config.Config) error {
@@ -16,7 +16,7 @@ func CreateProject(projectPath string, cfg config.Config) error {
 
 	if proj.Frontend.Required {
 		wg.Go(func() {
-			createService(proj.Frontend)
+			createService(proj.Frontend, cfg)
 		})
 	} else {
 		iostream.Log("No front-end required for this project.")
@@ -24,7 +24,7 @@ func CreateProject(projectPath string, cfg config.Config) error {
 
 	if proj.Backend.Required {
 		wg.Go(func() {
-			createService(proj.Backend)
+			createService(proj.Backend, cfg)
 		})
 	} else {
 		iostream.Log("No front-end required for this project.")
@@ -34,7 +34,25 @@ func CreateProject(projectPath string, cfg config.Config) error {
 	return nil
 }
 
-func createService(stack ServiceStack) {
-	time.Sleep(4 * time.Second)
-	iostream.Congrats(fmt.Sprintf("%s: ready!", stack.Name))
+func createService(stack ServiceStack, cfg config.Config) {
+	remotes := cfg.Templates.Remotes
+	found := false
+	remote := remotes[0]
+
+	for i := range remotes {
+		remote = remotes[i]
+		stack.URL = remote.URL + stack.Framework
+
+		_, err := TryRemote(stack.Path, stack.URL, remote)
+		if err == nil {
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		iostream.Danger(errors.New("could not find any repository for the given templates"))
+		return
+	}
+	iostream.Congrats(fmt.Sprintf("Stack %s has been deployed with this URL: %s", stack.Name, stack.URL))
 }
