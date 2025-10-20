@@ -12,8 +12,6 @@ func CreateProject(projectPath string, cfg config.Config) error {
 	proj := NewDefaultProject(cfg, projectPath)
 	var wg sync.WaitGroup
 
-	iostream.Log("Starting services deployment")
-
 	if proj.Frontend.Required {
 		wg.Go(func() {
 			createService(proj.Frontend, cfg)
