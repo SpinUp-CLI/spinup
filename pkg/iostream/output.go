@@ -10,6 +10,7 @@ const (
 	LogWarning int = iota
 	LogError   int = iota
 	LogInfo    int = iota
+	LogSuccess int = iota
 )
 
 type OutString struct {
@@ -29,6 +30,10 @@ func Log(format string, args ...any) {
 	print(OutString{String: format, Args: args}, OutString{}, nil, LogInfo, false)
 }
 
+func Success(format string, args ...any) {
+	print(OutString{String: format, Args: args}, OutString{}, nil, LogSuccess, false)
+}
+
 func print(successOutStr, errorOutStr OutString, err error, logLevel int, exit bool) {
 	var method func(string, ...any)
 
@@ -41,17 +46,21 @@ func print(successOutStr, errorOutStr OutString, err error, logLevel int, exit b
 	switch logLevel {
 	case LogWarning:
 		if err == nil {
+			print(successOutStr, errorOutStr, nil, LogInfo, false)
 			return
 		}
-		method("%s ⚠️  %s %s: %+v%s\n", utils.Orange, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
+		method("%s⚠️  %s %s: %+v%s\n", utils.Orange, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
 	case LogError:
 		if err == nil {
+			print(successOutStr, errorOutStr, nil, LogInfo, false)
 			return
 		}
-		method("%s ❌  %s %s: %+v%s\n", utils.Red, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
+		method("%s❌  %s %s: %+v%s\n", utils.Red, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
 	case LogInfo:
-		method("%s%s %s%s\n", utils.Blue, utils.Star, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
+		method("%s%s %s%s\n", utils.Blue, utils.Arrow, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
+	case LogSuccess:
+		method("%s%s %s%s\n", utils.Green, utils.Star, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
 	default:
-		method("%s%s %s%s\n", utils.Blue, utils.Star, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
+		method("%s%s %s%s\n", utils.Blue, utils.Arrow, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
 	}
 }
