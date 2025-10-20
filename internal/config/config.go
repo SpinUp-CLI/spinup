@@ -16,8 +16,7 @@ type MinimalConfig struct {
 }
 
 type TemplatesConfig struct {
-	TemplatesPath string            `yaml:"templates_path"`
-	Remotes       []TemplatesRemote `yaml:"remote_templates"`
+	Remotes []TemplatesRemote `yaml:"remote_templates"`
 }
 
 type TemplatesRemote struct {
@@ -37,7 +36,6 @@ func NewDefaultConfig() *Config {
 	return &Config{
 		EnvFile: "none",
 		Templates: TemplatesConfig{
-			TemplatesPath: "none",
 			Remotes: []TemplatesRemote{
 				{
 					Name:   "none",

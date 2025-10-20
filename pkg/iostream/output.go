@@ -29,6 +29,10 @@ func Success() {
 	fmt.Printf("%s %s %sSuccess!%s\n", utils.TsStep, utils.Arrow, utils.Green, utils.Reset)
 }
 
+func Congrats(msg string) {
+	fmt.Printf("%s %s %s%s%s\n", utils.TsStep, utils.Arrow, utils.Green, msg, utils.Reset)
+}
+
 func Info(msg string) {
 	fmt.Printf("%s %s %s%s%s\n", utils.TsStep, utils.Arrow, utils.Blue, msg, utils.Reset)
 }

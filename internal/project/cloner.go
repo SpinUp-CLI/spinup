@@ -7,11 +7,7 @@ import (
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
-func TryFromLocal(path, uri string) error {
-	return nil
-}
-
-func TryFromRemote(path, url string, remote config.TemplatesRemote) (*git.Repository, error) {
+func TryRemote(path, url string, remote config.TemplatesRemote) (*git.Repository, error) {
 	if remote.Secret != "none" && len(remote.Secret) > 0 {
 		repo, err := git.PlainClone(path, false, &git.CloneOptions{
 			URL: url,

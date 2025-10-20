@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	cmdutils "spinup/internal/commands/utils"
 	"spinup/internal/config"
+	"spinup/internal/project"
 	"spinup/pkg/iostream"
 
 	"github.com/spf13/cobra"
@@ -66,10 +67,9 @@ func CreateCmd(cmd *cobra.Command, args []string) {
 
 	// Create the project stacks/services.
 	iostream.Log("Creating project stacks/services.")
-	err = cmdutils.CreateProject(projectPath, cfg)
+	err = project.CreateProject(projectPath, cfg)
 	if err != nil {
 		iostream.Error(err)
 		os.Exit(1)
 	}
-	iostream.Success()
 }

@@ -12,20 +12,15 @@ type Project struct {
 	Backend  ServiceStack
 }
 
-const (
-	RemoteTemplate int = iota
-	LocalTemplate
-)
-
 type ServiceStack struct {
 	Name      string
 	Path      string
 	Framework string
-	From      int
 	URI       string
+	Required  bool
 }
 
-func CreateProject(cfg config.Config, path string) *Project {
+func NewDefaultProject(cfg config.Config, path string) *Project {
 	frontName := cfg.Defaults.ProjectName + "-front"
 	backName := cfg.Defaults.ProjectName + "-back"
 
@@ -36,15 +31,15 @@ func CreateProject(cfg config.Config, path string) *Project {
 			Name:      frontName,
 			Path:      filepath.Join(path, frontName),
 			Framework: cfg.Defaults.Frontend,
-			From:      RemoteTemplate,
 			URI:       "undefined",
+			Required:  cfg.Defaults.Frontend != "none",
 		},
 		Backend: ServiceStack{
 			Name:      backName,
 			Path:      filepath.Join(path, backName),
 			Framework: cfg.Defaults.Backend,
-			From:      RemoteTemplate,
 			URI:       "undefined",
+			Required:  cfg.Defaults.Backend != "none",
 		},
 	}
 }
