@@ -2,6 +2,7 @@ package commands
 
 import (
 	"errors"
+	"os"
 	cmdutils "spinup/internal/commands/utils"
 	"spinup/pkg/iostream"
 
@@ -9,16 +10,24 @@ import (
 )
 
 func InitCmd(cmd *cobra.Command, args []string) {
-	configExists := cmdutils.ConfigExists()
+	// Check if configuration exists. If not, a default one is created.
+	iostream.Log("Checking current configuration.")
+	configExists, err := cmdutils.ConfigExists()
+	if err != nil {
+		iostream.Error(err)
+		os.Exit(1)
+	}
 	if configExists {
-		iostream.Error(
-			iostream.OutString{},
-			iostream.OutString{String: "Configuration file found"},
-			errors.New("it seems a configuration already exists"),
-		)
-		return
+		iostream.Warning(errors.New("configuration already exists"))
+		os.Exit(0)
 	}
 
-	configPath := cmdutils.WriteConfig()
-	iostream.Success("Configuration file created. Configuration file path: %s", configPath)
+	// Create the configuration file.
+	iostream.Info("Configuration does not exist yet. Creating one.")
+	_, err = cmdutils.WriteConfig()
+	if err != nil {
+		iostream.Error(err)
+		os.Exit(1)
+	}
+	iostream.Success()
 }

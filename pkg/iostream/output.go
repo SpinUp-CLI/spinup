@@ -2,77 +2,37 @@ package iostream
 
 import (
 	"fmt"
-	"os"
+	"log"
 	"spinup/pkg/utils"
 )
 
 const (
 	LogWarning int = iota
-	LogError   int = iota
-	LogInfo    int = iota
-	LogSuccess int = iota
+	LogError
+	LogInfo
+	LogSuccess
 )
 
-type OutString struct {
-	String string
-	Args   []any
+func Error(err error) {
+	fmt.Printf("%s %s %sError: %+v%s\n", utils.TsStep, utils.Arrow, utils.Red, err, utils.Reset)
 }
 
-func Error(successOutStr, errorOutStr OutString, err error) {
-	print(successOutStr, errorOutStr, err, LogError, true)
+func Danger(err error) {
+	fmt.Printf("%s %s %sDanger: %+v%s\n", utils.TsStep, utils.Arrow, utils.Orange, err, utils.Reset)
 }
 
-func Warning(successOutStr, errorOutStr OutString, err error) {
-	print(successOutStr, errorOutStr, err, LogWarning, false)
+func Warning(err error) {
+	fmt.Printf("%s %s %sWarning: %+v%s\n", utils.TsStep, utils.Arrow, utils.Yellow, err, utils.Reset)
 }
 
-func Log(format string, args ...any) {
-	print(OutString{String: format, Args: args}, OutString{}, nil, LogInfo, false)
+func Success() {
+	fmt.Printf("%s %s %sSuccess!%s\n", utils.TsStep, utils.Arrow, utils.Green, utils.Reset)
 }
 
-func Success(format string, args ...any) {
-	print(OutString{String: format, Args: args}, OutString{}, nil, LogSuccess, false)
+func Info(msg string) {
+	fmt.Printf("%s %s %s%s%s\n", utils.TsStep, utils.Arrow, utils.Blue, msg, utils.Reset)
 }
 
-func print(successOutStr, errorOutStr OutString, err error, logLevel int, exit bool) {
-	var method func(string, ...any)
-
-	if exit {
-		method = func(format string, args ...any) {
-			fmt.Printf(format, args...)
-			os.Exit(1)
-		}
-	} else {
-		method = func(format string, args ...any) { fmt.Printf(format, args...) }
-	}
-
-	switch logLevel {
-	case LogWarning:
-		if err == nil {
-			print(successOutStr, errorOutStr, nil, LogInfo, false)
-			return
-		}
-		method("%s⚠️  %s %s: %+v%s\n", utils.Orange, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
-	case LogError:
-		if err == nil {
-			print(successOutStr, errorOutStr, nil, LogInfo, false)
-			return
-		}
-		method("%s❌ %s %s: %+v%s\n", utils.Red, utils.Arrow, fmt.Sprintf(errorOutStr.String, errorOutStr.Args...), err, utils.Reset)
-	case LogInfo:
-		if len(successOutStr.String) == 0 {
-			return
-		}
-		method("%s%s %s%s\n", utils.Blue, utils.Arrow, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
-	case LogSuccess:
-		if len(successOutStr.String) == 0 {
-			return
-		}
-		method("%s%s %s%s\n", utils.Green, utils.Star, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
-	default:
-		if len(successOutStr.String) == 0 {
-			return
-		}
-		method("%s%s %s%s\n", utils.Blue, utils.Arrow, fmt.Sprintf(successOutStr.String, successOutStr.Args...), utils.Reset)
-	}
+func Log(msg string) {
+	log.Printf("%s%s%s\n", utils.Purple, msg, utils.Reset)
 }
