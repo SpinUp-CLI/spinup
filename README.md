@@ -24,7 +24,7 @@ SpinUp is a powerful CLI tool that enables developers to quickly scaffold full-s
 
 ### Build from Source
 ```bash
-git clone <repository-url>
+git clone https://github.com/SpinUp-CLI/spinup
 cd spinup
 make all
 ```

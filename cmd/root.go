@@ -15,7 +15,7 @@ const rootHelpMenu string = `
         |'....|'   ||...'  .||. .||. ||.   '|..'    ||...'
                    ||                               ||
                   ''''                             ''''
-	  Copyright © 2025 Elouann Hosta ehosta@student.42lyon.fr
+	  MIT License - 2025 Elouann Hosta ehosta@student.42lyon.fr
 
 
 SpinUp is a CLI tool that build fully configurable web apps.
