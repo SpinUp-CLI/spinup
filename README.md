@@ -4,12 +4,12 @@
 
 > Build web-apps, with the frameworks of your choice, with a single command. 100% customisable.
 
-SpinUp is a powerful CLI tool that enables developers to quickly scaffold full-stack web applications using customizable templates. It supports various frontend frameworks, backend technologies, and database systems, all configurable through a simple YAML configuration file.
+SpinUp is a powerful CLI tool that enables developers to quickly scaffold full-stack web applications using customizable templates. It supports various frontend frameworks and backend technologies, all configurable through a simple YAML configuration file.
 
 ## ✨ Features
 
 - **🚀 Rapid Project Setup**: Create full-stack projects with a single command
-- **🔧 Fully Customizable**: Configure frontend, backend, and database stacks
+- **🔧 Fully Customizable**: Configure frontend, and backend services
 - **📦 Template System**: Support for remote Git repositories as templates
 - **🔐 Private Repository Support**: Authentication for private template repositories
 - **🌍 Environment Variables**: Dynamic configuration using environment files
@@ -70,7 +70,6 @@ templates:
 defaults:
   frontend: vue-template
   backend: go
-  database: postgresql
   project_name: web-app
 ```
 
@@ -98,7 +97,6 @@ templates:
 defaults:
   frontend: vue-template     # Frontend framework template
   backend: go               # Backend framework template
-  database: postgresql      # Database system
   project_name: web-app     # Default project name
 ```
 

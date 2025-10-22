@@ -27,7 +27,6 @@ SpinUp is a CLI tool that build fully configurable web apps.
 It uses the templates you want for each stack of your project:
  - A front-end service (Vue.js, React, etc.)
  - A back-end service (Go, Python Flask, Python Django, etc.)
- - A database service (PostgreSQL, MariaDB, MongoDB, etc.)
 
 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
 `

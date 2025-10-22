@@ -28,7 +28,6 @@ type TemplatesRemote struct {
 type DefaultsConfig struct {
 	Frontend    string `yaml:"frontend"`
 	Backend     string `yaml:"backend"`
-	Database    string `yaml:"database"`
 	ProjectName string `yaml:"project_name"`
 }
 
@@ -47,7 +46,6 @@ func NewDefaultConfig() *Config {
 		Defaults: DefaultsConfig{
 			Frontend:    "vue-template",
 			Backend:     "go",
-			Database:    "postgresql",
 			ProjectName: "web-app",
 		},
 	}
