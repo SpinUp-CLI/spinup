@@ -1,10 +1,10 @@
 package project
 
 import (
-	"errors"
 	"fmt"
 	"spinup/internal/config"
 	"spinup/pkg/iostream"
+	"spinup/pkg/utils"
 	"sync"
 )
 
@@ -49,8 +49,9 @@ func createService(stack ServiceStack, cfg config.Config) {
 	}
 
 	if !found {
-		iostream.Danger(errors.New("could not find any repository for the given templates"))
+		iostream.Error(fmt.Errorf("service %s cannot be deployed, '%s' template not found", stack.Name, stack.Framework))
 		return
 	}
-	iostream.Congrats(fmt.Sprintf("Stack %s has been deployed with this URL: %s", stack.Name, stack.URL))
+
+	iostream.Congrats(fmt.Sprintf("Stack has been deployed.\n%s    - Remote: %s\n%s    - Path: %s", utils.TsStep, stack.URL, utils.TsStep, stack.Path))
 }
